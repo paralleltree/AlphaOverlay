@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing;
 using System.Runtime.InteropServices;
 
 namespace AlphaOverlay
@@ -16,6 +17,30 @@ namespace AlphaOverlay
         public MainForm()
         {
             InitializeComponent();
+
+            this.AllowDrop = true;
+            this.DragEnter += OnDragEnter;
+            this.DragDrop += OnDragDrop;
+        }
+
+        private void OnDragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.All;
+        }
+
+        private void OnDragDrop(object sender, DragEventArgs e)
+        {
+            try
+            {
+                string path = ((string[])e.Data.GetData(DataFormats.FileDrop)).First();
+                using (var src = new Bitmap(path))
+                {
+                    mainPictureBox.Image = new Bitmap(src);
+                }
+            }
+            catch
+            {
+            }
         }
 
 
