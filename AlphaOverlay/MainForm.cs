@@ -18,6 +18,7 @@ namespace AlphaOverlay
         {
             InitializeComponent();
 
+            this.TopMost = true;
             this.AllowDrop = true;
             this.DragEnter += OnDragEnter;
             this.DragDrop += OnDragDrop;
